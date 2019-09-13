@@ -18,21 +18,35 @@ class App extends React.Component {
   render() {
     const { items, selectedItemIds } = this.state;
 
-    const unselectedItems = items.filter(
-      item => !selectedItemIds.includes(item.id)
-    );
+    const selectedItems = [];
+    const unselectedItems = [];
 
-    const selectedItems = items.filter(item =>
+    items.forEach(item => {
       selectedItemIds.includes(item.id)
-    );
+        ? selectedItems.push(item)
+        : unselectedItems.push(item);
+      // if(selectedItemIds.includes(item.id)) {
+      //   selectedItems.push(item);
+      // } else {
+      //   unselectedItems.push(item);
+      // }
+    });
+
+    // const unselectedItems = items.filter(
+    //   item => !selectedItemIds.includes(item.id)
+    // );
+
+    // const selectedItems = items.filter(item =>
+    //   selectedItemIds.includes(item.id)
+    // );
 
     return (
       <div className="wrapper">
-        <MenuSummary items={unselectedItems} />
+        <MenuSummary items={selectedItems} />
         <div className="container menu-builder">
           <div className="row">
             <ItemPicker items={unselectedItems} />
-            <MenuPreview items={unselectedItems} />
+            <MenuPreview items={selectedItems} />
           </div>
         </div>
       </div>

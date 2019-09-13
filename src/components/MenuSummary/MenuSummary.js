@@ -1,7 +1,7 @@
 import React from "react";
 
 export default ({ items }) => {
-  const numItems = items.len;
+  const numItems = items.length;
   const dietariesCount = {};
 
   items.forEach(({ dietaries }) => {
@@ -9,7 +9,6 @@ export default ({ items }) => {
       dietariesCount[dietary] = dietariesCount[dietary] + 1 || 0;
     });
   });
-  console.dir(dietariesCount);
 
   return (
     <div className="menu-summary">
@@ -26,10 +25,6 @@ export default ({ items }) => {
                 <span className="dietary">{dietary} </span>{" "}
               </div>
             ))}
-
-            {/* 6x <span className="dietary">ve</span>
-          4x <span className="dietary">v</span>
-          12x <span className="dietary">n!</span> */}
           </div>
         </div>
       </div>
