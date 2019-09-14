@@ -1,5 +1,5 @@
 import React from "react";
-import MenuPreview from "./MenuPreview";
+import ItemPicker from "./ItemPicker";
 import Item from "../Item";
 
 import Enzyme, { shallow } from "enzyme";
@@ -8,13 +8,13 @@ import items from "../../items";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const mockUnselectItem = jest.fn(item => id);
+const mockSelectItem = jest.fn(item => id);
 
-describe("<MenuPreview />", () => {
+describe("<ItemPicker />", () => {
   let component;
   beforeEach(() => {
     component = shallow(
-      <MenuPreview items={items.slice(0, 5)} unselectItem={mockUnselectItem} />
+      <ItemPicker items={items.slice(0, 5)} selectItem={mockSelectItem} />
     );
   });
 
@@ -23,10 +23,10 @@ describe("<MenuPreview />", () => {
     expect(itemComponents).toHaveLength(5);
   });
 
-  it("all Item components have canRemoveProp=true", () => {
+  it("all Item components do not have canRemoveProp=false", () => {
     const itemComponents = component.find(Item);
     itemComponents.forEach(item => {
-      expect(item.props().canRemoveProp).toBeTrue;
+      expect(item.props().canRemoveProp).toBeUndefined;
     });
   });
 });

@@ -6,7 +6,7 @@ export default ({ items }) => {
 
   items.forEach(({ dietaries }) => {
     dietaries.forEach(dietary => {
-      dietariesCount[dietary] = dietariesCount[dietary] + 1 || 0;
+      dietariesCount[dietary] = (dietariesCount[dietary] || 0) + 1;
     });
   });
 
@@ -15,11 +15,15 @@ export default ({ items }) => {
       <div className="container">
         <div className="row">
           <div className="col-6 menu-summary-left">
-            <span>{numItems} items</span>
+            <span className="num-items">{numItems} items</span>
           </div>
           <div className="col-6 menu-summary-right">
             {Object.keys(dietariesCount).map(dietary => (
-              <div className="dietary-yo" style={{ display: 'inline-block'}}>
+              <div
+                key={dietary}
+                className="dietary-type"
+                style={{ display: "inline-block" }}
+              >
                 {" "}
                 {dietariesCount[dietary]}x{" "}
                 <span className="dietary">{dietary} </span>{" "}

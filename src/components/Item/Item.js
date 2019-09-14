@@ -1,13 +1,32 @@
-import React from 'react';
+import React from "react";
 
-export default ({ name, dietaries, canRemove }) => (
-  <li className="item">
+/* The Item's behavior will change on whether or not 
+canRemove is true */
+
+export default ({ name, dietaries, canRemove, handleClick, id }) => (
+  <li
+    className={`item${canRemove ? "" : " unselected"}`}
+    onClick={() => {
+      if (!canRemove) handleClick(id);
+    }}
+  >
     <h2>{name}</h2>
     <p>
       {dietaries.map(dietary => (
-        <span className="dietary">{dietary}</span>
+        <span key={dietary} className="dietary">
+          {dietary}
+        </span>
       ))}
     </p>
-    {canRemove && <button className="remove-item">x</button>}
+    {canRemove && (
+      <button
+        className="remove-item"
+        onClick={() => {
+          handleClick(id);
+        }}
+      >
+        x
+      </button>
+    )}
   </li>
 );

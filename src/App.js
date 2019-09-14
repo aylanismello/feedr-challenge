@@ -15,38 +15,45 @@ class App extends React.Component {
     this.setState({ items });
   }
 
-  render() {
+  selectItem(id) {
+    this.setState({ selectedItemIds: [...this.state.selectedItemIds, id] });
+  }
+
+  unselectItem(id) {
+    const updatedSelectedItemIds = this.state.selectedItemIds.filter(
+      itemId => itemId !== id
+    );
+    this.setState({ selectedItemIds: updatedSelectedItemIds });
+  }
+
+  getSelectedAndUnselectedItems() {
     const { items, selectedItemIds } = this.state;
 
-    const selectedItems = [];
-    const unselectedItems = [];
+    const selectedItems = selectedItemIds.map(
+      itemId => items.filter(item => item.id === itemId)[0]
+    );
+    const unselectedItems = items.filter(item => !selectedItems.includes(item));
 
-    items.forEach(item => {
-      selectedItemIds.includes(item.id)
-        ? selectedItems.push(item)
-        : unselectedItems.push(item);
-      // if(selectedItemIds.includes(item.id)) {
-      //   selectedItems.push(item);
-      // } else {
-      //   unselectedItems.push(item);
-      // }
-    });
+    return { selectedItems, unselectedItems };
+  }
 
-    // const unselectedItems = items.filter(
-    //   item => !selectedItemIds.includes(item.id)
-    // );
-
-    // const selectedItems = items.filter(item =>
-    //   selectedItemIds.includes(item.id)
-    // );
+  render() {
+    const { items, selectedItemIds } = this.state;
+    const { selectedItems, unselectedItems } = this.getSelectedAndUnselectedItems();
 
     return (
       <div className="wrapper">
         <MenuSummary items={selectedItems} />
         <div className="container menu-builder">
           <div className="row">
-            <ItemPicker items={unselectedItems} />
-            <MenuPreview items={selectedItems} />
+            <ItemPicker
+              selectItem={id => this.selectItem(id)}
+              items={unselectedItems}
+            />
+            <MenuPreview
+              unselectItem={id => this.unselectItem(id)}
+              items={selectedItems}
+            />
           </div>
         </div>
       </div>

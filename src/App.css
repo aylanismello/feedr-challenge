@@ -68,6 +68,10 @@ li.item p {
   margin: 0;
 }
 
+li.item.unselected:hover {
+  cursor: pointer;
+}
+
 button.remove-item {
   position: absolute;
   top: -13px;
